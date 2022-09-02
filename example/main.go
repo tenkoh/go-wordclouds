@@ -13,7 +13,7 @@ import (
 	"runtime/pprof"
 	"time"
 
-	"github.com/psykhi/wordclouds"
+	"github.com/tenkoh/go-wordclouds"
 	"gopkg.in/yaml.v2"
 )
 
