@@ -1,4 +1,4 @@
-module github.com/psykhi/wordclouds
+module github.com/tenkoh/go-wordclouds
 
 go 1.18
 
