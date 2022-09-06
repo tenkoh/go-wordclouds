@@ -1,19 +1,33 @@
 package wordclouds
 
 import (
+	"bytes"
+	"image"
 	"image/color"
+	_ "image/png"
 	"math"
 
 	"github.com/fogleman/gg"
 )
 
 // Mask creates a slice of box structs from a given mask image to be passed to wordclouds.MaskBoxes.
-func Mask(path string, width int, height int, exclude color.RGBA) []*Box {
+func Mask[T ~string | ~[]byte](maskImage T, width int, height int, exclude color.RGBA) []*Box {
 	res := make([]*Box, 0)
 
-	img, err := gg.LoadPNG(path)
-	if err != nil {
-		panic(err)
+	var img image.Image
+	switch v := any(maskImage).(type) {
+	case string:
+		i, err := gg.LoadPNG(v)
+		if err != nil {
+			panic(err)
+		}
+		img = i
+	case []byte:
+		i, _, err := image.Decode(bytes.NewReader(v))
+		if err != nil {
+			panic(err)
+		}
+		img = i
 	}
 
 	// scale
